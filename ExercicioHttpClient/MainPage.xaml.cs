@@ -1,5 +1,6 @@
 ﻿using ExercicioHttpClient.Models;
-using System.Text.Json;
+//using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace ExercicioHttpClient
 {
@@ -18,25 +19,23 @@ namespace ExercicioHttpClient
             //Formatar o dado para que ele seja um objeto
             //Exibir o dado na tela
             Usuario meuUsuario = new Usuario();
-            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
-
+            Postagem minhaPostagem = new Postagem();
+            //string URI = "http://has.azure-api.net/teste";
+            string URI = "https://jsonplaceholder.typicode.com/posts";
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage responseMessage = await httpClient.GetAsync("http://has.azure-api.net/teste");
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(URI);
+
+            List<Postagem> postagens = new List<Postagem>();
+
             if (responseMessage.IsSuccessStatusCode)
             {
                 //É necessário Serializar e Desserializar a informação
                 string conteudo = await responseMessage.Content.ReadAsStringAsync();
-                meuUsuario = JsonSerializer.Deserialize<Usuario>(conteudo, jsonSerializerOptions);
-                CPFLbl.Text = meuUsuario.CPF;
-                NomeLbl.Text = meuUsuario.Nome;
+                //meuUsuario = JsonConvert.DeserializeObject<Usuario>(conteudo);
+                postagens = JsonConvert.DeserializeObject<List<Postagem>>(conteudo);
+                //CPFLbl.Text = meuUsuario.CPF;
+                NomeLbl.Text = postagens[0].Title;
             }
-
-
         }
     }
-
 }
