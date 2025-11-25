@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ExercicioHttpClient.Models;
+using ExercicioHttpClient.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,15 @@ namespace ExercicioHttpClient.ViewModels
     {
         [ObservableProperty]
         public int id;
-        public int Id;
+        [ObservableProperty]
         public string title;
+        [ObservableProperty]
         public string body;
+
+        public async void CarregaPostagens()
+        {
+            List<Postagem> Listar = new List<Postagem>();
+            Listar = await new PostagensService().GetPostagens();
+        }
     }
 }
