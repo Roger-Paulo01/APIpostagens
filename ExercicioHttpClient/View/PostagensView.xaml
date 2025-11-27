@@ -18,6 +18,6 @@
             HorizontalOptions="Center" />
         <Button
             Text="Carregar"
-            Command="{Binding CarregarPostagensCommand}">
+            Command="{Binding CarregarPostagensCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
