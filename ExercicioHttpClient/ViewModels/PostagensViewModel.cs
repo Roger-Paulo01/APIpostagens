@@ -22,13 +22,13 @@ namespace ExercicioHttpClient.ViewModels
         public string body;
         public ICommand CarregarPostagensCommand => new Command(async () => CarregaPostagens());
 
+        [ObservableProperty]
+        public List<Postagem> listar = new List<Postagem>();
+
+
         public async void CarregaPostagens()
         {
-            List<Postagem> Listar = new List<Postagem>();
-            Listar = await new PostagensService().GetPostagens();
-            Id = Listar[0].Id;
-            Title = Listar[0].Title;
-            Body = Listar[0].Body;
+            listar = await new PostagensService().GetPostagens();
         }
     }
 }
